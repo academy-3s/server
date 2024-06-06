@@ -33,7 +33,8 @@ const orderController = require("./controllers/orderController")
 const indexRoutes = require('./routes');
 const certificate = require('./routes/certificate');
 const orderRoutes = require('./routes/orderRoutes');
-
+const DB_USER = encodeURIComponent(process.env.DB_USERNAME);
+const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
 const app = express();
 
@@ -56,10 +57,9 @@ app.use(cors());
 //app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(bodyParser.json());
 // app.use('/', routes);
-
 // DataBase Connection
 mongoose
-  .connect(process.env.DB, {
+  .connect(`mongodb://${DB_USER}:${DB_PASSWORD}@127.0.0.1:47123/Academy?authSource=admin`, {
     useNewUrlParser: true,
   })
   .then(() => console.log("DataBase connection successful"))
