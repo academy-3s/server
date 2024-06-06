@@ -58,13 +58,25 @@ const uploadQuestions = async (req, res) => {
     await RealTestQuestions.deleteMany({ course: courseId });
 
     const questions = data.map((row) => {
-      const options = [row.A, row.B, row.C, row.D].filter(Boolean);
-      const answer = row.answer;
+      const options = [
+        row["OPTION A"],
+        row["OPTION B"],
+        row["OPTION C"],
+        row["OPTION D"],
+      ].filter(
+        (item) =>
+          item !== null &&
+          item !== "" &&
+          item !== undefined &&
+          !Number.isNaN(item)
+      );
+      const answer = row.ANSWER;
+
       return {
-        question: row.question,
+        question: row.QUESTIONS,
         answer,
         options,
-        module: row.Module,
+        module: row["MODULE NAME"],
         course: courseId,
         time,
       };
